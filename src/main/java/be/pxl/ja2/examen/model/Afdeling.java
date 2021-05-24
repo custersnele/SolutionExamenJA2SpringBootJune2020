@@ -9,6 +9,15 @@ public class Afdeling {
 	private String code;
 	private String naam;
 
+	public Afdeling() {
+		// JPA only
+	}
+
+	public Afdeling(String code, String naam) {
+		this.code = code;
+		this.naam = naam;
+	}
+
 	public String getCode() {
 		return code;
 	}
