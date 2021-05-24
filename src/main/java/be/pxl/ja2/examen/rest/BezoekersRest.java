@@ -1,6 +1,5 @@
 package be.pxl.ja2.examen.rest;
 
-import be.pxl.ja2.examen.rest.resources.BezoekResource;
 import be.pxl.ja2.examen.rest.resources.RegistreerBezoekerResource;
 import be.pxl.ja2.examen.service.BezoekersService;
 import be.pxl.ja2.examen.util.exception.BezoekersAppException;
@@ -18,9 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
+import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @RestController
@@ -34,7 +32,7 @@ public class BezoekersRest {
 	private BezoekersService bezoekersService;
 
 	@PostMapping
-	public ResponseEntity<Long> registreerBezoeker(@RequestBody RegistreerBezoekerResource registreerBezoekerResource) {
+	public ResponseEntity<Long> registreerBezoeker(@RequestBody @Valid RegistreerBezoekerResource registreerBezoekerResource) {
 		try {
 			Long result = bezoekersService.registreerBezoeker(registreerBezoekerResource);
 			return new ResponseEntity<>(result, HttpStatus.CREATED);

@@ -10,7 +10,6 @@ public class Patient {
 	@Id
 	private String code;
 	private LocalDateTime opname;
-	private LocalDateTime ontslag;
 	@ManyToOne
 	private Afdeling afdeling;
 
