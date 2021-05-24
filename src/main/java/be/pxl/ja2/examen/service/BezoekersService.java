@@ -23,10 +23,13 @@ public class BezoekersService {
 
 	public static final int BEZOEKERS_PER_TIJDSTIP_PER_AFDELING = 2;
 
-	@Autowired
-	private BezoekersDao bezoekersDao;
-	@Autowired
-	private PatientDao patientDao;
+	private final BezoekersDao bezoekersDao;
+	private final PatientDao patientDao;
+
+	public BezoekersService(BezoekersDao bezoekersDao, PatientDao patientDao) {
+		this.bezoekersDao = bezoekersDao;
+		this.patientDao = patientDao;
+	}
 
 	public Long registreerBezoeker(RegistreerBezoekerResource registreerBezoekerResource) throws BezoekersAppException, OngeldigTijdstipException {
 		BezoekerstijdstipUtil.controleerBezoekerstijdstip(registreerBezoekerResource.getTijdstip());

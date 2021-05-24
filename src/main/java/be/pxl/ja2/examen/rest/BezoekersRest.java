@@ -28,8 +28,11 @@ public class BezoekersRest {
 	private static final DateTimeFormatter TIMESTAMP_FORMAT = DateTimeFormatter.ofPattern("yyyyMMddHH:mm");
 	private static final Logger LOGGER = LogManager.getLogger(BezoekersRest.class);
 
-	@Autowired
-	private BezoekersService bezoekersService;
+	private final BezoekersService bezoekersService;
+
+	public BezoekersRest(BezoekersService bezoekersService) {
+		this.bezoekersService = bezoekersService;
+	}
 
 	@PostMapping
 	public ResponseEntity<Long> registreerBezoeker(@RequestBody @Valid RegistreerBezoekerResource registreerBezoekerResource) {
