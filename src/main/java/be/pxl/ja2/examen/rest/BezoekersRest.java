@@ -36,23 +36,16 @@ public class BezoekersRest {
 
 	@PostMapping
 	public ResponseEntity<Long> registreerBezoeker(@RequestBody @Valid RegistreerBezoekerResource registreerBezoekerResource) {
-		try {
 			Long result = bezoekersService.registreerBezoeker(registreerBezoekerResource);
 			return new ResponseEntity<>(result, HttpStatus.CREATED);
-		} catch (BezoekersAppException | OngeldigTijdstipException e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-		}
+
 	}
 
 	@GetMapping
 	@RequestMapping("{bezoekerId}/{entranceTimestamp}")
 	public ResponseEntity<Void> controleerBezoek(@PathVariable("bezoekerId") Long bezoekerId, @PathVariable("entranceTimestamp") String entranceTimestamp) {
-		try {
 			bezoekersService.controleerBezoek(bezoekerId, LocalDateTime.parse(entranceTimestamp, TIMESTAMP_FORMAT));
 			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (BezoekersAppException | OngeldigTijdstipException e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-		}
 
 	}
 

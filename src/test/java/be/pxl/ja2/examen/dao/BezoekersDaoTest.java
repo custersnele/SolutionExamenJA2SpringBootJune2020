@@ -16,6 +16,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 public class BezoekersDaoTest {
@@ -38,6 +39,8 @@ public class BezoekersDaoTest {
 		testEntityManager.persist(p2);
 		Bezoeker bezoeker = BezoekerBuilder.aBezoeker().withPatient(p2).withTijdstip(LocalTime.of(14, 0)).build();
 		testEntityManager.persist(bezoeker);
+		testEntityManager.flush();
+		testEntityManager.clear();
 	}
 
 
@@ -49,8 +52,14 @@ public class BezoekersDaoTest {
 		assertEquals(1, bezoekers.size());
 		assertEquals(afdeling, bezoekers.get(0).getPatient().getAfdeling());
 		assertEquals(LocalTime.of(14,0), bezoekers.get(0).getTijdstip());
+	}
 
+	@Test
+	void returnsGeenBezoekersVoorTijdstipOpAfdeling() {
+		List<Bezoeker> bezoekers = bezoekersDao.findBezoekersByTijdstipAndPatient_Afdeling(LocalTime.of(14, 10), afdeling);
 
+		Assertions.assertNotNull(bezoekers);
+		assertTrue(bezoekers.isEmpty());
 	}
 
 

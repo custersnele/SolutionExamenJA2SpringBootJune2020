@@ -45,7 +45,6 @@ public class BezoekerServiceRegistreerBezoekerTest {
 
 	@BeforeEach
 	public void init(){
-		MockitoAnnotations.initMocks(this);
 		registreerBezoekerResource = new RegistreerBezoekerResource();
 		registreerBezoekerResource.setNaam("Vanaken");
 		registreerBezoekerResource.setVoornaam("Max");
@@ -61,19 +60,21 @@ public class BezoekerServiceRegistreerBezoekerTest {
 	}
 
 	@Test
-	public void throwsBezoerksAppExceptionWhenPatientAlreadyHasVisitor() {
+	public void throwsBezoekersAppExceptionWhenPatientAlreadyHasVisitor() {
 		when(patientDao.findById(PATIENT_CODE)).thenReturn(Optional.of(PatientBuilder.aPatient().withCode(PATIENT_CODE).build()));
 		when(bezoekerDao.findBezoekerByPatient_Code(PATIENT_CODE)).thenReturn(new Bezoeker());
 		assertThrows(BezoekersAppException.class, () -> bezoekersService.registreerBezoeker(registreerBezoekerResource));
 	}
 
 	@Test
-	public void bezoekerIsSavedCorrectly() throws BezoekersAppException, OngeldigTijdstipException {
+	public void bezoekerIsSavedCorrectly() {
 		Patient patient = PatientBuilder.aPatient().withCode(PATIENT_CODE).build();
 		when(patientDao.findById(PATIENT_CODE)).thenReturn(Optional.of(patient));
 		when(bezoekerDao.findBezoekerByPatient_Code(PATIENT_CODE)).thenReturn(null);
 		when(bezoekerDao.save(any())).thenAnswer(AdditionalAnswers.returnsFirstArg());
+
 		bezoekersService.registreerBezoeker(registreerBezoekerResource);
+
 		verify(bezoekerDao).save(bezoekerArgumentCaptor.capture());
 		Bezoeker bezoeker = bezoekerArgumentCaptor.getValue();
 

@@ -33,4 +33,23 @@ public class Afdeling {
 	public void setNaam(String naam) {
 		this.naam = naam;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+
+		Afdeling afdeling = (Afdeling) o;
+
+		return code != null ? code.equals(afdeling.code) : afdeling.code == null;
+	}
+
+	@Override
+	public int hashCode() {
+		return code != null ? code.hashCode() : 0;
+	}
 }

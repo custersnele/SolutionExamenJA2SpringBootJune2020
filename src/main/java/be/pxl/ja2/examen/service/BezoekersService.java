@@ -31,7 +31,7 @@ public class BezoekersService {
 		this.patientDao = patientDao;
 	}
 
-	public Long registreerBezoeker(RegistreerBezoekerResource registreerBezoekerResource) throws BezoekersAppException, OngeldigTijdstipException {
+	public Long registreerBezoeker(RegistreerBezoekerResource registreerBezoekerResource) {
 		BezoekerstijdstipUtil.controleerBezoekerstijdstip(registreerBezoekerResource.getTijdstip());
 		Patient patient = patientDao.findById(registreerBezoekerResource.getPatientCode()).orElse(null);
 		if (patient == null) {

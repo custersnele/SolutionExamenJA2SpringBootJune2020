@@ -2,6 +2,7 @@ package be.pxl.ja2.examen.rest;
 
 import be.pxl.ja2.examen.rest.resources.RegistreerBezoekerResource;
 import be.pxl.ja2.examen.service.BezoekersService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -55,6 +56,7 @@ public class BezoekersRestTest {
 
 		RegistreerBezoekerResource resource = registreerBezoekerResourceArgumentCaptor.getValue();
 
+		Assertions.assertEquals("Max", resource.getVoornaam());
 		// TODO validate values
 	}
 }
